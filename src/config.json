@@ -1,0 +1,81 @@
+{
+  "name": "TextEditor",
+  "type": "executer",
+  "execProgram": "node",
+  "main": "app.js",
+  "methods": [
+    {
+      "name": "createFile",
+      "viewName": "Create new file",
+      "params": [
+        {
+          "name": "PATH",
+          "viewName": "File path",
+          "type": "string"
+        },
+        {
+          "name": "CONTENT",
+          "viewName": "File Content",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "appendToFile",
+      "viewName": "Append to file",
+      "params":
+      [
+        {
+          "name": "PATH",
+          "viewName": "File path",
+          "type": "string"
+        },
+        {
+          "name": "CONTENT",
+          "viewName": "Content",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "searchInFile",
+      "viewName": "Search in file",
+      "params":
+      [
+        {
+          "name": "PATH",
+          "viewName": "File path",
+          "type": "string"
+        },
+        {
+          "name": "REGEX",
+          "viewName": "Regexp",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "replaceText",
+      "viewName": "Replace text in file",
+      "params":
+      [
+        {
+          "name": "PATH",
+          "viewName": "File path",
+          "type": "string"
+        },
+        {
+          "name": "REGEX",
+          "viewName": "Find (regexp)",
+          "type": "string"
+        },
+        {
+          "name": "REPLACE",
+          "viewName": "Replace with",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "imgUrl": "TextEditor.png"
+}
