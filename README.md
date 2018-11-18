@@ -1,2 +1,2 @@
-# pm-plugin-textEditor
-Text editor plugin for Producitonmap
+# kaholo-plugin-textEditor
+Text editor plugin for Kaholo
