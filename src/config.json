@@ -3,15 +3,16 @@
   "type": "executer",
   "execProgram": "node",
   "main": "app.js",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "imgUrl": "TextEditor.png",
   "methods": [
     {
       "name": "createFile",
-      "viewName": "Create new file",
+      "viewName": "Create New File",
       "params": [
         {
           "name": "PATH",
-          "viewName": "File path",
+          "viewName": "File Path",
           "type": "string"
         },
         {
@@ -23,60 +24,91 @@
     },
     {
       "name": "appendToFile",
-      "viewName": "Append to file",
+      "viewName": "Append To File",
       "params":
       [
         {
           "name": "PATH",
-          "viewName": "File path",
+          "viewName": "File Path",
           "type": "string"
         },
         {
           "name": "CONTENT",
           "viewName": "Content",
           "type": "text"
+        },
+        {
+          "name": "dontCreate",
+          "viewName": "Don't Create",
+          "type": "boolean"
+        },
+        {
+          "name": "return",
+          "viewName": "Return New Content",
+          "type": "boolean"
         }
       ]
     },
     {
       "name": "searchInFile",
-      "viewName": "Search in file",
+      "viewName": "Search In File",
       "params":
       [
         {
           "name": "PATH",
-          "viewName": "File path",
+          "viewName": "File Path",
           "type": "string"
         },
         {
           "name": "REGEX",
           "viewName": "Regexp",
           "type": "string"
+        },
+        {
+          "name": "return",
+          "viewName": "Return Matches",
+          "type": "boolean"
         }
       ]
     },
     {
       "name": "replaceText",
-      "viewName": "Replace text in file",
+      "viewName": "Replace Text In File",
       "params":
       [
         {
           "name": "PATH",
-          "viewName": "File path",
+          "viewName": "File Path",
           "type": "string"
         },
         {
           "name": "REGEX",
-          "viewName": "Find (regexp)",
+          "viewName": "Search Regex Expression",
           "type": "string"
         },
         {
           "name": "REPLACE",
-          "viewName": "Replace with",
+          "viewName": "Replace Value",
+          "type": "string"
+        },
+        {
+          "name": "return",
+          "viewName": "Return New Content",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "getFileContent",
+      "viewName": "Get File Content",
+      "params":
+      [
+        {
+          "name": "PATH",
+          "viewName": "File Path",
           "type": "string"
         }
       ]
     }
-  ],
-  "imgUrl": "TextEditor.png"
+  ]
 }

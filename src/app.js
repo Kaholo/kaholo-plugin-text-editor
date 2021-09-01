@@ -1,74 +1,48 @@
-let fs = require('fs');
+const FileTextEditor = require('./textEditorService');
+const parsers = require('./parsers')
 
 function createFile(action) {
-    return new Promise((resolve, reject) => {
-        let path = action.params.PATH;
-        let content = action.params.CONTENT;
-        fs.writeFile(path, content, function (error) {
-            if (error) {
-                return reject("Error creating file ", error)
-            }
-            return resolve("Created file ", path);
-        });
+    const fileEditor = new FileTextEditor(action.params.PATH);
+    return fileEditor.createFile({
+        content: action.params.CONTENT
     });
 }
 
 function appendToFile(action) {
-    return new Promise((resolve, reject) => {
-        let path = action.params.PATH;
-        let content = action.params.CONTENT;
-
-        // Asynchronously append data to a file
-        // creating the file if it does not yet exist.
-        fs.appendFile(path, content, function (err) {
-            if (err) {
-
-                return reject("Error appending data to file ", error)
-
-            } else {
-                return resolve('file ' + path + ' updated');
-            }
-        });
+    const fileEditor = new FileTextEditor(action.params.PATH);
+    return fileEditor.appendToFile({
+        content: action.params.CONTENT,
+        createIfNeeded: !parsers.boolean(action.params.dontCreate),
+        returnContent: parsers.boolean(action.params.return)
     });
 }
 
 function searchInFile(action) {
-    return new Promise((resolve, reject) => {
-        let path = action.params.PATH;
-        let exp = action.params.REGEX;
-        fs.readFile(path, 'utf8', function (err, data) {
-            if (err) {
-                return reject({ "error": err });
-            }
-            let pattern = new RegExp(exp);
-            return resolve(pattern.test(data));
-        });
+    const fileEditor = new FileTextEditor(action.params.PATH);
+    return fileEditor.searchInFile({
+        regExp: parsers.regex(action.params.REGEX),
+        returnContent: parsers.boolean(action.params.return)
     });
 }
 
 function replaceText(action) {
-    return new Promise((resolve, reject) => {
-        let path = action.params.PATH;
-        let replaceValue = action.params.REPLACE;
-        let exp = action.params.REGEX;
-        fs.readFile(path, 'utf8', function (err, data) {
-            if (err) {
-                return reject({ "error": err });
-            }
-            let content = data.replace(new RegExp(exp, 'g'), replaceValue);
-            fs.writeFile(path, content, 'utf-8', function (err) {
-                if (err) {
-                    return reject({ "error": err });
-                }
-                return resolve('text replaced');
-            });
-        });
+    const fileEditor = new FileTextEditor(action.params.PATH);
+    return fileEditor.replaceText({
+        catchExp: parsers.regex(action.params.REGEX),
+        replaceValue: action.params.REPLACE,
+        returnContent: parsers.boolean(action.params.return)
     });
 }
 
+function getFileContent(action) {
+    const fileEditor = new FileTextEditor(action.params.PATH);
+    return fileEditor.getFileContent({});
+}
+
 module.exports = {
-    createFile: createFile,
-    appendToFile: appendToFile,
-    searchInFile: searchInFile,
-    replaceText: replaceText
+    createFile,
+    appendToFile,
+    searchInFile,
+    replaceText,
+    getFileContent
 };
