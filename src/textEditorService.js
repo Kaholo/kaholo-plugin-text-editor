@@ -34,7 +34,7 @@ module.exports = class FileTextEditor{
         return returnContent ? await fs.readFileSync(this.fixedPath, 'utf8') : `File ${this.path} updated.`;
     }
 
-    async getFileContent({}){
+    async getFileContent(){
         if (!fs.existsSync(this.fixedPath)) throw `File ${this.path} wasn't found`;
         try {
             return fs.readFileSync(this.fixedPath, 'utf8');
@@ -45,12 +45,12 @@ module.exports = class FileTextEditor{
     }
 
     async searchInFile({regExp, returnContent}){
-        const fileContent = await this.getFileContent({});
+        const fileContent = await this.getFileContent();
         return returnContent ? [...fileContent.matchAll(regExp)] : regExp.test(fileContent);
     }
 
     async replaceText({catchExp, replaceValue, returnContent}){
-        const fileContent = await this.getFileContent({});
+        const fileContent = await this.getFileContent();
         const newContent = fileContent.replace(catchExp, replaceValue);
         await this.createFile({content: newContent});
         return returnContent ? newContent : `File ${this.path} updated.`;
