@@ -1,9 +1,10 @@
 {
   "name": "TextEditor",
+  "viewName": "Text Editor",
   "type": "executer",
   "execProgram": "node",
   "main": "app.js",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "imgUrl": "TextEditor.png",
   "methods": [
     {
@@ -19,6 +20,22 @@
           "name": "CONTENT",
           "viewName": "File Content",
           "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "createVaultFile",
+      "viewName": "Create File From Vault",
+      "params": [
+        {
+          "name": "PATH",
+          "viewName": "File Path",
+          "type": "string"
+        },
+        {
+          "name": "CONTENT",
+          "viewName": "File Content",
+          "type": "vault"
         }
       ]
     },

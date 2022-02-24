@@ -8,6 +8,10 @@ function createFile(action) {
     });
 }
 
+function createVaultFile(action) {
+    return createFile(action);
+}
+
 function appendToFile(action) {
     const fileEditor = new FileTextEditor(action.params.PATH);
     return fileEditor.appendToFile({
@@ -44,5 +48,6 @@ module.exports = {
     appendToFile,
     searchInFile,
     replaceText,
-    getFileContent
+    getFileContent,
+    createVaultFile
 };
