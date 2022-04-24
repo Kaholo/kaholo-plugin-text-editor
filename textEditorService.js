@@ -1,58 +1,57 @@
-const fs = require('fs');
-const {path: parsePath} = require('./parsers');
+const fs = require("fs");
+const { path: parsePath } = require("./parsers");
 
-module.exports = class FileTextEditor{
-    constructor(path) {
-        this.path = path;
-        this.fixedPath = parsePath(path);
-    }
+module.exports = class FileTextEditor {
+  constructor(path) {
+    this.path = path;
+    this.fixedPath = parsePath(path);
+  }
 
-    async createFile({content}){
-        try { 
-            await fs.writeFileSync(this.fixedPath, content);
-        }
-        catch (error) {
-            throw `Error creating file ${this.path}: ${error.message || JSON.stringify(error)}`
-        }
-        return `Created file ${this.path}.`;
+  async createFile({ content }) {
+    try {
+      await fs.writeFileSync(this.fixedPath, content);
+    } catch (error) {
+      throw `Error creating file ${this.path}: ${error.message || JSON.stringify(error)}`;
     }
+    return `Created file ${this.path}.`;
+  }
 
-    async appendToFile({content, createIfNeeded, returnContent}){
-        if (!fs.existsSync(this.fixedPath)) {
-            if (createIfNeeded) {
-                const result = await this.createFile({content});
-                return returnContent ? await fs.readFileSync(this.fixedPath, 'utf8') : result;
-            }
-            throw `File ${this.path} doesn't exist!`;
-        }
-        try { 
-            await fs.appendFileSync(this.fixedPath, content);
-        }
-        catch (error) {
-            throw `Error updating file ${this.path}: ${error.message || JSON.stringify(error)}`
-        }
-        return returnContent ? await fs.readFileSync(this.fixedPath, 'utf8') : `File ${this.path} updated.`;
+  async appendToFile({ content, createIfNeeded, returnContent }) {
+    if (!fs.existsSync(this.fixedPath)) {
+      if (createIfNeeded) {
+        const result = await this.createFile({ content });
+        return returnContent ? await fs.readFileSync(this.fixedPath, "utf8") : result;
+      }
+      throw `File ${this.path} doesn't exist!`;
     }
+    try {
+      await fs.appendFileSync(this.fixedPath, content);
+    } catch (error) {
+      throw `Error updating file ${this.path}: ${error.message || JSON.stringify(error)}`;
+    }
+    return returnContent ? await fs.readFileSync(this.fixedPath, "utf8") : `File ${this.path} updated.`;
+  }
 
-    async getFileContent(){
-        if (!fs.existsSync(this.fixedPath)) throw `File ${this.path} wasn't found`;
-        try {
-            return fs.readFileSync(this.fixedPath, 'utf8');
-        }
-        catch (error) {
-            throw `Error reading file ${this.path}: ${error.message || JSON.stringify(error)}`
-        }
+  async getFileContent() {
+    if (!fs.existsSync(this.fixedPath)) {
+      throw `File ${this.path} wasn't found`;
     }
+    try {
+      return fs.readFileSync(this.fixedPath, "utf8");
+    } catch (error) {
+      throw `Error reading file ${this.path}: ${error.message || JSON.stringify(error)}`;
+    }
+  }
 
-    async searchInFile({regExp, returnContent}){
-        const fileContent = await this.getFileContent();
-        return returnContent ? [...fileContent.matchAll(regExp)] : regExp.test(fileContent);
-    }
+  async searchInFile({ regExp, returnContent }) {
+    const fileContent = await this.getFileContent();
+    return returnContent ? [...fileContent.matchAll(regExp)] : regExp.test(fileContent);
+  }
 
-    async replaceText({catchExp, replaceValue, returnContent}){
-        const fileContent = await this.getFileContent();
-        const newContent = fileContent.replace(catchExp, replaceValue);
-        await this.createFile({content: newContent});
-        return returnContent ? newContent : `File ${this.path} updated.`;
-    }
-}
+  async replaceText({ catchExp, replaceValue, returnContent }) {
+    const fileContent = await this.getFileContent();
+    const newContent = fileContent.replace(catchExp, replaceValue);
+    await this.createFile({ content: newContent });
+    return returnContent ? newContent : `File ${this.path} updated.`;
+  }
+};
