@@ -31,13 +31,6 @@
           "required": true,
           "description": "The initial contents of the file",
           "placeholder": "#!/bin/bash\ntar -czvf logs-$(date +%F).tgz /var/log/*.log"
-        },
-        {
-          "name": "overwriteExisting",
-          "viewName": "Overwrite Existing",
-          "type": "boolean",
-          "default": true,
-          "description": "If selected, any existing file at the File Path will be overwritten."
         }
       ]
     },
