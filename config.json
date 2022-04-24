@@ -6,7 +6,7 @@
   "execProgram": "node",
   "version": "1.2.1",
   "description": "basic create, read, edit, search functions for text files",
-  "imgUrl": "TextEditor.png",
+  "imgUrl": "logo.png",
   "category": [
     "FILES",
     "CORE"
