@@ -1,7 +1,7 @@
 const os = require("os");
 
 const homeDirectory = os.homedir();
-const isWin = os.platform() == "win32";
+const isWin = os.platform() === "win32";
 const { normalize } = require("path");
 
 function parseArray(value) {
@@ -14,7 +14,7 @@ function parseArray(value) {
   if (typeof (value) === "string") {
     return value.split("\n").map((line) => line.trim()).filter((line) => line);
   }
-  throw "Unsupprted array format";
+  throw new Error("Unsupprted array format");
 }
 
 function untildify(path) {
@@ -38,9 +38,9 @@ module.exports = {
     if (!value) {
       return undefined;
     }
-    const parsed = parseInt(value);
-    if (parsed === NaN) {
-      throw `Value ${value} is not a valid number`;
+    const parsed = parseInt(value, 10);
+    if (parsed.isNaN) {
+      throw new Error(`Value ${value} is not a valid number`);
     }
     return parsed;
   },
@@ -70,7 +70,7 @@ module.exports = {
       return undefined;
     }
     if (typeof (value) !== "object") {
-      throw `Value ${value} is not an object`;
+      throw new Error(`Value ${value} is not an object`);
     }
     return value;
   },
@@ -81,7 +81,7 @@ module.exports = {
     if (typeof (value) === "string") {
       return value.trim();
     }
-    throw `Value ${value} is not a valid string`;
+    throw new Error(`Value ${value} is not a valid string`);
   },
   path: (value) => {
     if (!value) {
@@ -105,7 +105,7 @@ module.exports = {
       }
       return new RegExp(value);
     } catch (error) {
-      throw `${value} is not a valid Regex Expression!`;
+      throw new Error(`${value} is not a valid Regex Expression!`);
     }
   },
   array: parseArray,

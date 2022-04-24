@@ -11,7 +11,7 @@ module.exports = class FileTextEditor {
     try {
       await fs.writeFileSync(this.fixedPath, content);
     } catch (error) {
-      throw `Error creating file ${this.path}: ${error.message || JSON.stringify(error)}`;
+      throw new Error(`Error creating file ${this.path}: ${error.message || JSON.stringify(error)}`);
     }
     return `Created file ${this.path}.`;
   }
@@ -22,24 +22,24 @@ module.exports = class FileTextEditor {
         const result = await this.createFile({ content });
         return returnContent ? await fs.readFileSync(this.fixedPath, "utf8") : result;
       }
-      throw `File ${this.path} doesn't exist!`;
+      throw new Error(`File ${this.path} doesn't exist!`);
     }
     try {
       await fs.appendFileSync(this.fixedPath, content);
     } catch (error) {
-      throw `Error updating file ${this.path}: ${error.message || JSON.stringify(error)}`;
+      throw new Error(`Error updating file ${this.path}: ${error.message || JSON.stringify(error)}`);
     }
     return returnContent ? await fs.readFileSync(this.fixedPath, "utf8") : `File ${this.path} updated.`;
   }
 
   async getFileContent() {
     if (!fs.existsSync(this.fixedPath)) {
-      throw `File ${this.path} wasn't found`;
+      throw new Error(`File ${this.path} wasn't found`);
     }
     try {
       return fs.readFileSync(this.fixedPath, "utf8");
     } catch (error) {
-      throw `Error reading file ${this.path}: ${error.message || JSON.stringify(error)}`;
+      throw new Error(`Error reading file ${this.path}: ${error.message || JSON.stringify(error)}`);
     }
   }
 
