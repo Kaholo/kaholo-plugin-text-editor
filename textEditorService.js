@@ -20,16 +20,12 @@ module.exports = class FileTextEditor {
     if (!fs.existsSync(this.fixedPath)) {
       if (createIfNeeded) {
         const result = await this.createFile({ content });
-        return returnContent ? await fs.readFileSync(this.fixedPath, "utf8") : result;
+        return returnContent ? fs.promises.readFile(this.fixedPath, "utf8") : result;
       }
       throw new Error(`File ${this.path} doesn't exist!`);
     }
-    try {
-      await fs.appendFileSync(this.fixedPath, content);
-    } catch (error) {
-      throw new Error(`Error updating file ${this.path}: ${error.message || JSON.stringify(error)}`);
-    }
-    return returnContent ? await fs.readFileSync(this.fixedPath, "utf8") : `File ${this.path} updated.`;
+    await fs.appendFileSync(this.fixedPath, content);
+    return returnContent ? fs.promises.readFile(this.fixedPath, "utf8") : `File ${this.path} updated.`;
   }
 
   async getFileContent() {
