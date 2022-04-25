@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/Kaholo/kaholo-plugin-textEditor/issues"
   },
-  "homepage": "https://github.com/Kaholo/kaholo-plugin-template#readme",
+  "homepage": "https://github.com/Kaholo/kaholo-plugin-textEditor#readme",
   "devDependencies": {
     "eslint": "8.8.0",
     "eslint-config-airbnb-base": "15.0.0",
