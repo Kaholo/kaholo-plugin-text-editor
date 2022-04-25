@@ -79,14 +79,14 @@
           "name": "dontCreate",
           "viewName": "Don't Create",
           "type": "boolean",
-          "default": "false",
+          "default": false,
           "description": "If selected, append only if file at File Path already exists"
         },
         {
           "name": "return",
           "viewName": "Return New Content",
           "type": "boolean",
-          "default": "false",
+          "default": false,
           "description": "If selected, after appending the entire contents of the file are returned to Final Result."
         }
       ]
@@ -114,7 +114,7 @@
           "name": "return",
           "viewName": "Return Matches",
           "type": "boolean",
-          "default": "false",
+          "default": false,
           "description": "If selected, all matching strings are returned. Otherwise only whether or not a match was found."
         }
       ]
@@ -151,7 +151,7 @@
           "name": "return",
           "viewName": "Return New Content",
           "type": "boolean",
-          "default": "false",
+          "default": false,
           "description": "If selected, after replacing the entire contents of the file are returned to Final Result."
         }
       ]
