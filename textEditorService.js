@@ -24,12 +24,11 @@ module.exports = class FileTextEditor {
       }
       throw new Error(`File ${this.path} doesn't exist!`);
     }
-        try { 
-            await fs.appendFileSync(this.fixedPath, content);
-        }
-        catch (error) {
-            throw new Error(`Error updating file ${this.path}: ${error.message || JSON.stringify(error)}`);
-        }
+    try {
+      await fs.appendFileSync(this.fixedPath, content);
+    } catch (error) {
+      throw new Error(`Error updating file ${this.path}: ${error.message || JSON.stringify(error)}`);
+    }
     return returnContent ? fs.promises.readFile(this.fixedPath, "utf8") : `File ${this.path} updated.`;
   }
 
