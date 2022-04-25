@@ -2,10 +2,15 @@
   "name": "TextEditor",
   "viewName": "Text Editor",
   "type": "executer",
-  "execProgram": "node",
   "main": "app.js",
-  "version": "1.2.0",
-  "imgUrl": "TextEditor.png",
+  "execProgram": "node",
+  "version": "1.2.1",
+  "description": "basic create, read, edit, search functions for text files",
+  "imgUrl": "logo.png",
+  "category": [
+    "FILES",
+    "CORE"
+  ],
   "methods": [
     {
       "name": "createFile",
@@ -14,12 +19,18 @@
         {
           "name": "PATH",
           "viewName": "File Path",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "The complete path and filename for the new file",
+          "placeholder": "/home/logadmin/scripts/export.sh"
         },
         {
           "name": "CONTENT",
           "viewName": "File Content",
-          "type": "text"
+          "type": "text",
+          "required": true,
+          "description": "The initial contents of the file",
+          "placeholder": "#!/bin/bash\ntar -czvf logs-$(date +%F).tgz /var/log/*.log"
         }
       ]
     },
@@ -30,12 +41,17 @@
         {
           "name": "PATH",
           "viewName": "File Path",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "The complete path and filename for the new file",
+          "placeholder": "/home/logadmin/scripts/export.sh"
         },
         {
           "name": "CONTENT",
           "viewName": "File Content",
-          "type": "vault"
+          "type": "vault",
+          "required": true,
+          "description": "The Kaholo vault item continaing the contents for the file"
         }
       ]
     },
@@ -46,22 +62,32 @@
         {
           "name": "PATH",
           "viewName": "File Path",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "The complete path and filename for file to be appended",
+          "placeholder": "/home/logadmin/scripts/export.sh"
         },
         {
           "name": "CONTENT",
           "viewName": "Content",
-          "type": "text"
+          "type": "text",
+          "required": true,
+          "description": "The text to append to the file",
+          "placeholder": "chmod 400 /home/logadmin/key001.pem"
         },
         {
           "name": "dontCreate",
           "viewName": "Don't Create",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false,
+          "description": "If selected, append only if file at File Path already exists"
         },
         {
           "name": "return",
           "viewName": "Return New Content",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false,
+          "description": "If selected, after appending the entire contents of the file are returned to Final Result."
         }
       ]
     },
@@ -72,17 +98,24 @@
         {
           "name": "PATH",
           "viewName": "File Path",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "The complete path and filename for file to search",
+          "placeholder": "/home/logadmin/scripts/export.sh"
         },
         {
           "name": "REGEX",
           "viewName": "Regexp",
-          "type": "string"
+          "type": "string",
+          "description": "Regular expressions are patterns used to match character combinations in strings.",
+          "placeholder": "^.*ERROR.*$"
         },
         {
           "name": "return",
           "viewName": "Return Matches",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false,
+          "description": "If selected, all matching strings are returned. Otherwise only whether or not a match was found."
         }
       ]
     },
@@ -93,39 +126,49 @@
         {
           "name": "PATH",
           "viewName": "File Path",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "The complete path and filename for the file to have replacements made",
+          "placeholder": "/home/logadmin/scripts/export.sh"
         },
         {
           "name": "REGEX",
           "viewName": "Search Regex Expression",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "Regular expressions are patterns used to match character combinations in strings.",
+          "placeholder": "[eE][rR][rR][oO][rR]"
         },
         {
           "name": "REPLACE",
           "viewName": "Replace Value",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "The string to replace those matching the Search Regex Expression",
+          "placeholder": "Error"
         },
         {
           "name": "return",
           "viewName": "Return New Content",
-          "type": "boolean"
+          "type": "boolean",
+          "default": false,
+          "description": "If selected, after replacing the entire contents of the file are returned to Final Result."
         }
       ]
     },
     {
       "name": "getFileContent",
-      "viewName": "Get File Content",
+      "viewName": "Read File Content",
       "params": [
         {
           "name": "PATH",
           "viewName": "File Path",
-          "type": "string"
+          "type": "string",
+          "required": true,
+          "description": "The complete path and filename for the file to read",
+          "placeholder": "/home/logadmin/scripts/export.sh"
         }
       ]
     }
-  ],
-  "category": [
-    "FILES",
-    "CORE"
   ]
 }

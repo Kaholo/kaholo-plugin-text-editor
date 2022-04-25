@@ -1,5 +1,5 @@
 # kaholo-plugin-textEditor
-Text editor plugin for Kaholo.
+Text editor plugin for Kaholo. Creates file, adds content, search/replace, and reads file for output in Final Results. For other file operations such as `chmod` or `rm`, please use the Command Line plugin instead.
 
 ## Method: Create New File
 Create a new file with specified content in the specified path.
