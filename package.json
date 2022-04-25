@@ -14,7 +14,7 @@
   "author": "Kaholo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Kaholo/kaholo-plugin-template/issues"
+    "url": "https://github.com/Kaholo/kaholo-plugin-textEditor/issues"
   },
   "homepage": "https://github.com/Kaholo/kaholo-plugin-template#readme",
   "devDependencies": {
