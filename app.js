@@ -1,12 +1,22 @@
 const fs = require("fs/promises");
 const { bootstrap } = require("kaholo-plugin-library");
-const { tryCreateRegexFromString, parsePath, pathExists } = require("./helpers");
+const {
+  tryCreateRegexFromString,
+  parsePath,
+  pathExists,
+} = require("./helpers");
 
 async function createFile({
   PATH: path,
   CONTENT: content,
+  overwrite = true,
 }) {
   const parsedPath = parsePath(path);
+
+  const fileAlreadyExists = await pathExists(parsedPath);
+  if (!overwrite && fileAlreadyExists) {
+    throw new Error(`File at ${path} already exists!`);
+  }
 
   try {
     await fs.writeFile(parsedPath, content);
@@ -14,7 +24,7 @@ async function createFile({
     throw new Error(`Failed to write to a file at ${path}: ${error.message || JSON.stringify(error)}`);
   }
 
-  return `Created file ${path}.`;
+  return fileAlreadyExists ? `File ${path} overwritten.` : `Created file ${path}.`;
 }
 
 async function appendToFile({
