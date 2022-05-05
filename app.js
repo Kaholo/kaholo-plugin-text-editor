@@ -7,11 +7,13 @@ async function createFile({
   CONTENT: content,
 }) {
   const parsedPath = parsePath(path);
+
   try {
     await fs.writeFile(parsedPath, content);
   } catch (error) {
     throw new Error(`Error creating file ${path}: ${error.message || JSON.stringify(error)}`);
   }
+
   return `Created file ${path}.`;
 }
 
@@ -29,11 +31,13 @@ async function appendToFile({
     }
     throw new Error(`File ${path} doesn't exist!`);
   }
+
   try {
     await fs.appendFile(parsedPath, content);
   } catch (error) {
     throw new Error(`Error updating file ${path}: ${error.message || JSON.stringify(error)}`);
   }
+
   return returnContent ? getFileContent({ PATH: path }) : `File ${path} updated.`;
 }
 
@@ -45,6 +49,7 @@ async function searchInFile({
   const parsedPath = parsePath(path);
   const parsedRegex = tryCreateRegexFromString(searchRegex);
   const fileContent = await getFileContent({ PATH: parsedPath });
+
   return (
     returnContent
       ? { matches: [...fileContent.matchAll(parsedRegex)] }
@@ -60,8 +65,10 @@ async function replaceText({
 }) {
   const parsedRegex = tryCreateRegexFromString(replaceByRegex);
   const fileContent = await getFileContent({ PATH: path });
+
   const newContent = fileContent.replace(parsedRegex, replaceValue);
   await createFile({ PATH: path, CONTENT: newContent });
+
   return returnContent ? newContent : `File ${path} updated.`;
 }
 
@@ -70,6 +77,7 @@ async function getFileContent({ PATH: path }) {
   if (!pathExists(parsedPath)) {
     throw new Error(`File ${path} wasn't found`);
   }
+
   try {
     return await fs.readFile(parsedPath, "utf8");
   } catch (error) {

@@ -24,12 +24,14 @@ function tryCreateRegexFromString(stringValue) {
 
 function parsePath(value) {
   let path = value ?? "";
+
   if (isPlatformWindows) {
     path = path.replace(/\//g, "\\");
   } else {
     path = path.replace(/\\/g, "/");
   }
   const untildified = homeDirectory ? path.replace(/^~(?=$|\/|\\)/, homeDirectory) : path;
+
   return normalize(untildified);
 }
 
