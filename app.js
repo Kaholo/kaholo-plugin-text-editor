@@ -23,25 +23,26 @@ async function appendToFile({
   return: returnContent,
   dontCreate,
 }) {
+  const doCreateFile = !dontCreate;
   const parsedPath = parsePath(path);
   const passedPathExists = await pathExists(parsedPath);
-  let appendToFileResult;
+  let fileOperationResult;
 
-  if (!passedPathExists && dontCreate) {
+  if (!passedPathExists && !doCreateFile) {
     throw new Error(`File ${path} doesn't exist!`);
   }
-  if (!passedPathExists && !dontCreate) {
-    appendToFileResult = await createFile({ PATH: path, CONTENT: content });
+  if (!passedPathExists && doCreateFile) {
+    fileOperationResult = await createFile({ PATH: path, CONTENT: content });
   } else {
     try {
       await fs.appendFile(parsedPath, content);
-      appendToFileResult = `File ${path} updated.`;
     } catch (error) {
       throw new Error(`Failed to update a file at ${path}: ${error.message || JSON.stringify(error)}`);
     }
+    fileOperationResult = `File ${path} updated.`;
   }
 
-  return returnContent ? getFileContent({ PATH: path }) : appendToFileResult;
+  return returnContent ? getFileContent({ PATH: path }) : fileOperationResult;
 }
 
 async function searchInFile({
