@@ -23,14 +23,16 @@ async function appendToFile({
   return: returnContent,
   dontCreate,
 }) {
+  let fileOperationResult;
   const doCreateFile = !dontCreate;
+
   const parsedPath = parsePath(path);
   const passedPathExists = await pathExists(parsedPath);
-  let fileOperationResult;
 
   if (!passedPathExists && !doCreateFile) {
     throw new Error(`File ${path} doesn't exist!`);
   }
+
   if (!passedPathExists && doCreateFile) {
     fileOperationResult = await createFile({ PATH: path, CONTENT: content });
   } else {
