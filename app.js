@@ -51,6 +51,7 @@ async function searchInFile({
 }) {
   const parsedPath = parsePath(path);
   const parsedRegex = tryCreateRegexFromString(searchRegex);
+
   const fileContent = await getFileContent({ PATH: parsedPath });
 
   return (
