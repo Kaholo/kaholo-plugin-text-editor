@@ -27,6 +27,7 @@ async function appendToFile({
   if (!await pathExists(parsedPath)) {
     if (!dontCreate) {
       const createFileResult = await createFile({ PATH: path, CONTENT: content });
+
       return returnContent ? getFileContent({ PATH: path }) : createFileResult;
     }
     throw new Error(`File ${path} doesn't exist!`);
