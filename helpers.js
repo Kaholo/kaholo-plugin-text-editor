@@ -3,7 +3,7 @@ const fs = require("fs/promises");
 const { normalize } = require("path");
 
 const homeDirectory = os.homedir();
-const isPlatformWindows = os.platform() === "win32";
+const isWindowsPlatform = os.platform() === "win32";
 
 async function pathExists(path) {
   try {
@@ -25,14 +25,14 @@ function tryCreateRegexFromString(stringValue) {
 function parsePath(value) {
   let path = value ?? "";
 
-  if (isPlatformWindows) {
+  if (isWindowsPlatform) {
     path = path.replace(/\//g, "\\");
   } else {
     path = path.replace(/\\/g, "/");
   }
-  const untildified = homeDirectory ? path.replace(/^~(?=$|\/|\\)/, homeDirectory) : path;
+  const untildifiedPath = homeDirectory ? path.replace(/^~(?=$|\/|\\)/, homeDirectory) : path;
 
-  return normalize(untildified);
+  return normalize(untildifiedPath);
 }
 
 module.exports = {
