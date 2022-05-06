@@ -9,11 +9,11 @@ const {
 async function createFile({
   PATH: path,
   CONTENT: content,
-  overwrite = true,
+  overwrite,
 }) {
   const parsedPath = parsePath(path);
-
   const fileAlreadyExists = await pathExists(parsedPath);
+
   if (!overwrite && fileAlreadyExists) {
     throw new Error(`File at ${path} already exists!`);
   }
