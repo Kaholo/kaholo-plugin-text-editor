@@ -4,7 +4,7 @@
   "type": "executer",
   "main": "app.js",
   "execProgram": "node",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "basic create, read, edit, search functions for text files",
   "imgUrl": "logo.png",
   "category": [
