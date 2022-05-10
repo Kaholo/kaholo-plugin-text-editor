@@ -44,7 +44,7 @@ async function appendToFile({
   }
 
   if (!passedPathExists && doCreateFile) {
-    fileOperationResult = await createFile({ PATH: path, CONTENT: content });
+    fileOperationResult = await createFile({ PATH: path, CONTENT: content, overwrite: true });
   } else {
     try {
       await fs.appendFile(parsedPath, content);
@@ -84,7 +84,11 @@ async function replaceText({
   const fileContent = await getFileContent({ PATH: path });
 
   const newContent = fileContent.replace(parsedRegex, replaceValue);
-  await createFile({ PATH: path, CONTENT: newContent });
+  await createFile({
+    PATH: path,
+    CONTENT: newContent,
+    overwrite: true,
+  });
 
   return returnContent ? newContent : `File ${path} updated.`;
 }
