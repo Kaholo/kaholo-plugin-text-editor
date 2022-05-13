@@ -1,5 +1,6 @@
 const fs = require("fs/promises");
 const { bootstrap } = require("kaholo-plugin-library");
+const { dirname } = require("path");
 const {
   tryCreateRegexFromString,
   parsePath,
@@ -16,6 +17,11 @@ async function createFile({
 
   if (!overwrite && fileAlreadyExists) {
     throw new Error(`File at ${path} already exists!`);
+  }
+
+  const directoryPath = dirname(path);
+  if (!await pathExists(directoryPath)) {
+    await fs.mkdir(directoryPath, { recursive: true });
   }
 
   try {
