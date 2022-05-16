@@ -4,7 +4,7 @@
   "type": "executer",
   "main": "app.js",
   "execProgram": "node",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "basic create, read, edit, search functions for text files",
   "imgUrl": "logo.png",
   "category": [
@@ -59,6 +59,13 @@
           "type": "vault",
           "required": true,
           "description": "The Kaholo vault item continaing the contents for the file"
+        },
+        {
+          "name": "overwrite",
+          "viewName": "Overwrite Existing",
+          "description": "If selected, any existing file at the File Path will be overwritten.",
+          "type": "boolean",
+          "default": true
         }
       ]
     },
