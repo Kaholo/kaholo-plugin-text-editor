@@ -1,5 +1,5 @@
 const fs = require("fs/promises");
-const { bootstrap } = require("kaholo-plugin-library");
+const { bootstrap } = require("@kaholo/plugin-library");
 const { dirname } = require("path");
 const {
   tryCreateRegexFromString,
