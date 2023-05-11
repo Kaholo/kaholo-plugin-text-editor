@@ -8,9 +8,19 @@
   "description": "basic create, read, edit, search functions for text files",
   "imgUrl": "logo.png",
   "category": [
-    "FILES",
-    "CORE"
+    "Basic Tools"
   ],
+  "keywords": [
+    "text",
+    "file",
+    "vault",
+    "search",
+    "replace",
+    "line",
+    "regex",
+    "write",
+    "append"
+   ],
   "methods": [
     {
       "name": "createFile",
