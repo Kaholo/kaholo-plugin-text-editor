@@ -5,6 +5,7 @@ const {
   tryCreateRegexFromString,
   parsePath,
   pathExists,
+  endingWithNewline,
 } = require("./helpers");
 
 async function createFile({
@@ -25,7 +26,7 @@ async function createFile({
   }
 
   try {
-    await fs.writeFile(parsedPath, content);
+    await fs.writeFile(parsedPath, endingWithNewline(content));
   } catch (error) {
     throw new Error(`Failed to write to a file at ${path}: ${error.message || JSON.stringify(error)}`);
   }
@@ -50,10 +51,14 @@ async function appendToFile({
   }
 
   if (!passedPathExists && doCreateFile) {
-    fileOperationResult = await createFile({ PATH: path, CONTENT: content, overwrite: true });
+    fileOperationResult = await createFile({
+      PATH: path,
+      CONTENT: endingWithNewline(content),
+      overwrite: true,
+    });
   } else {
     try {
-      await fs.appendFile(parsedPath, content);
+      await fs.appendFile(parsedPath, endingWithNewline(content));
     } catch (error) {
       throw new Error(`Failed to update a file at ${path}: ${error.message || JSON.stringify(error)}`);
     }
@@ -92,7 +97,7 @@ async function replaceText({
   const newContent = fileContent.replace(parsedRegex, replaceValue);
   await createFile({
     PATH: path,
-    CONTENT: newContent,
+    CONTENT: endingWithNewline(newContent),
     overwrite: true,
   });
 
