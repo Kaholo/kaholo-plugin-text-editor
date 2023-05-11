@@ -43,9 +43,17 @@ function logToActivityLog(message) {
   console.error(message);
 }
 
+function endingWithNewline(textfile) {
+  if (/[\r\n]$/.test(textfile)) {
+    return textfile;
+  }
+  return (`${textfile}\n`);
+}
+
 module.exports = {
   tryCreateRegexFromString,
   parsePath,
   pathExists,
   logToActivityLog,
+  endingWithNewline,
 };
