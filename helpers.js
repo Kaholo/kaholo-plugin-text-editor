@@ -15,8 +15,11 @@ async function pathExists(path) {
 }
 
 function tryCreateRegexFromString(stringValue) {
+  const regexSyntaxMatch = stringValue.match(/^\/(.+)(?<!\\)\/([gmi]+)/);
+  const regexBody = regexSyntaxMatch ? regexSyntaxMatch[1] : stringValue;
+  const modifiers = regexSyntaxMatch ? regexSyntaxMatch[2] : "gm";
   try {
-    return new RegExp(stringValue, "g");
+    return new RegExp(regexBody, modifiers);
   } catch (error) {
     throw new Error(`${stringValue} is not a valid Regular Expression!`);
   }
@@ -35,14 +38,6 @@ function parsePath(value) {
   return normalize(untildifiedPath);
 }
 
-function logToActivityLog(message) {
-  // TODO: Change console.error to console.info
-  // Right now (Kaholo v4.1.2.1) console.info
-  // does not print messages to Activity Log
-  // Jira ticket: https://kaholo.atlassian.net/browse/KAH-3636
-  console.error(message);
-}
-
 function endingWithNewline(textfile) {
   if (/[\r\n]$/.test(textfile)) {
     return textfile;
@@ -54,6 +49,5 @@ module.exports = {
   tryCreateRegexFromString,
   parsePath,
   pathExists,
-  logToActivityLog,
   endingWithNewline,
 };
