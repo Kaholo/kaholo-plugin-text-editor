@@ -15,7 +15,7 @@ async function pathExists(path) {
 }
 
 function tryCreateRegexFromString(stringValue) {
-  const regexSyntaxMatch = stringValue.match(/^\/(.+)(?<!\\)\/([gmi]+)/);
+  const regexSyntaxMatch = stringValue.match(/^\/(.+)(?<!\\)\/([gmi]*)/);
   const regexBody = regexSyntaxMatch ? regexSyntaxMatch[1] : stringValue;
   const modifiers = regexSyntaxMatch ? regexSyntaxMatch[2] : "gm";
   try {
