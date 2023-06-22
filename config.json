@@ -4,7 +4,7 @@
   "type": "executer",
   "main": "app.js",
   "execProgram": "node",
-  "version": "1.6.2",
+  "version": "1.6.2-KP-1216",
   "description": "basic create, read, edit, search functions for text files",
   "imgUrl": "logo.png",
   "category": [
@@ -48,6 +48,13 @@
           "description": "If selected, any existing file at the File Path will be overwritten.",
           "type": "boolean",
           "default": true
+        },
+        {
+          "name": "return",
+          "viewName": "Return File Content",
+          "type": "boolean",
+          "default": false,
+          "description": "If selected, after writing the file, the contents are also returned to Final Result."
         }
       ]
     },

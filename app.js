@@ -12,6 +12,7 @@ async function createFile({
   PATH: path,
   CONTENT: content,
   overwrite,
+  return: returnContent,
 }) {
   const parsedPath = parsePath(path);
   const fileAlreadyExists = await pathExists(parsedPath);
@@ -31,7 +32,8 @@ async function createFile({
     throw new Error(`Failed to write to a file at ${path}: ${error.message || JSON.stringify(error)}`);
   }
 
-  return fileAlreadyExists ? `File ${path} overwritten.` : `Created file ${path}.`;
+  const fileOperationResult = fileAlreadyExists ? `File ${path} overwritten.` : `Created file ${path}.`;
+  return returnContent ? getFileContent({ PATH: path }) : fileOperationResult;
 }
 
 async function appendToFile({
@@ -80,7 +82,7 @@ async function searchInFile({
 
   return (
     returnContent
-      ? { matches: [...fileContent.matchAll(parsedRegex)] }
+      ? { matches: [...fileContent.match(parsedRegex)] }
       : { found: parsedRegex.test(fileContent) }
   );
 }
