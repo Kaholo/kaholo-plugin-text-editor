@@ -134,7 +134,7 @@
         },
         {
           "name": "REGEX",
-          "viewName": "Regexp",
+          "viewName": "RegExp",
           "type": "string",
           "description": "Regular expressions are patterns used to match character combinations in strings.",
           "placeholder": "^.*ERROR.*$"
@@ -172,9 +172,9 @@
           "name": "REPLACE",
           "viewName": "Replace Value",
           "type": "text",
-          "required": true,
+          "required": false,
           "description": "The string to replace those matching the Search Regex Expression",
-          "placeholder": "Error"
+          "placeholder": "(Leave undefined to simply delete matches)"
         },
         {
           "name": "return",

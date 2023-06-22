@@ -90,7 +90,7 @@ async function searchInFile({
 async function replaceText({
   PATH: path,
   REGEX: replaceByRegex,
-  REPLACE: replaceValue,
+  REPLACE: replaceValue = "", // undefined = delete the matches and replace with nothing
   return: returnContent,
 }) {
   const parsedRegex = tryCreateRegexFromString(replaceByRegex);
