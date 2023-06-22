@@ -48,6 +48,13 @@
           "description": "If selected, any existing file at the File Path will be overwritten.",
           "type": "boolean",
           "default": true
+        },
+        {
+          "name": "return",
+          "viewName": "Return File Content",
+          "type": "boolean",
+          "default": false,
+          "description": "If selected, after writing the file, the contents are also returned to Final Result."
         }
       ]
     },
@@ -127,7 +134,7 @@
         },
         {
           "name": "REGEX",
-          "viewName": "Regexp",
+          "viewName": "RegExp",
           "type": "string",
           "description": "Regular expressions are patterns used to match character combinations in strings.",
           "placeholder": "^.*ERROR.*$"
@@ -164,10 +171,10 @@
         {
           "name": "REPLACE",
           "viewName": "Replace Value",
-          "type": "string",
-          "required": true,
+          "type": "text",
+          "required": false,
           "description": "The string to replace those matching the Search Regex Expression",
-          "placeholder": "Error"
+          "placeholder": "(Leave undefined to simply delete matches)"
         },
         {
           "name": "return",
