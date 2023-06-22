@@ -171,7 +171,7 @@
         {
           "name": "REPLACE",
           "viewName": "Replace Value",
-          "type": "string",
+          "type": "text",
           "required": true,
           "description": "The string to replace those matching the Search Regex Expression",
           "placeholder": "Error"
