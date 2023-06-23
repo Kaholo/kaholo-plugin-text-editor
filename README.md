@@ -2,7 +2,7 @@
 This plugin extends Kaholo's capabilities to create, read, append, search and replace text in text files.
 
 ## Newlines
-Text files of all types typically end with a newline character. The plugin will therefore attempt to help you do this, for example if you append text that does NOT end with a newline, one will be added for you. In some very unusual cases, for example if you wanted a file to NOT end with a newline character, this could be problematic. There are several work-arounds, including method Replace Text in File with a regex to identify the unwanted newlines and replace them with nothing, or using sed or truncate with the Command Line plugin to remove only the final newline of a file like so:
+Text files of all types typically end with a newline character. The plugin will therefore attempt to help you do this, for example if you append text that does NOT end with a newline, one will be added for you. In some very unusual cases, for example if you wanted a file to NOT end with a newline character, this could be problematic. There are several work-arounds, including method Replace Text in File with a RegExp to identify the unwanted newlines and replace them with nothing, or using sed or truncate with the Command Line plugin to remove only the final newline of a file like so:
 
     file=mytestfile.txt
     size=$(stat -c '%s' "$file")
@@ -11,11 +11,11 @@ Text files of all types typically end with a newline character. The plugin will 
 ## RegExp
 Methods to Search and Replace/Remove text in the file rely on [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) of the type commonly found in Perl, JavaScript, and other programming languages. For those unfamiliar with these it is recommended that one build and test regular expressions on a purpose-built website such as [Regex101](https://regex101.com/).
 
-In some cases a regex may be entered in plain format, for example to match the word "Kaholo" in the text you may simply use that word as the regex. Global and multiline options are assumed. However if you want a case insensitive (Option "i") and non-global (find first match only) search then you must use the flagged expression:
+In some cases a RegExp may be entered in plain format, for example to match the word "Kaholo" in the text you may simply use that word as the RegExp. Global and multiline options are assumed. However if you want a case insensitive (Option "i") and non-global (find first match only) search then you must use the flagged expression:
 
     /kaholo/i
 
-The plugin applies the regex using JavaScript [String.prototype.match(RegExp)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match).
+The plugin applies the RegExp using JavaScript [String.prototype.match(RegExp)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match).
 
 ## Method: Create New File
 Create a new file with specified content in the specified path.
@@ -50,7 +50,7 @@ By default if the file does not yet exist it will be created for you. If this pa
 If enabled, the entire contents of the file will be returned in the Kaholo execution's Final Result.
 
 ## Method: Search In File
-Search the content of the specified file for the specified regex pattern. The return value can be either simply `"found": true` or an array of matching strings from the file.
+Search the content of the specified file for the specified RegExp pattern. The return value can be either simply `"found": true` or an array of matching strings from the file.
 
 ### Parameter: File Path
 The path and file name for the text file to be searched on the Kaholo agent. Either absolute or relative paths may be used.
