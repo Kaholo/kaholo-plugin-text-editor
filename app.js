@@ -5,12 +5,14 @@ const {
   tryCreateRegexFromString,
   parsePath,
   pathExists,
+  endingWithNewline,
 } = require("./helpers");
 
 async function createFile({
   PATH: path,
   CONTENT: content,
   overwrite,
+  return: returnContent,
 }) {
   const parsedPath = parsePath(path);
   const fileAlreadyExists = await pathExists(parsedPath);
@@ -25,12 +27,13 @@ async function createFile({
   }
 
   try {
-    await fs.writeFile(parsedPath, content);
+    await fs.writeFile(parsedPath, endingWithNewline(content));
   } catch (error) {
     throw new Error(`Failed to write to a file at ${path}: ${error.message || JSON.stringify(error)}`);
   }
 
-  return fileAlreadyExists ? `File ${path} overwritten.` : `Created file ${path}.`;
+  const fileOperationResult = fileAlreadyExists ? `File ${path} overwritten.` : `Created file ${path}.`;
+  return returnContent ? getFileContent({ PATH: path }) : fileOperationResult;
 }
 
 async function appendToFile({
@@ -50,10 +53,14 @@ async function appendToFile({
   }
 
   if (!passedPathExists && doCreateFile) {
-    fileOperationResult = await createFile({ PATH: path, CONTENT: content, overwrite: true });
+    fileOperationResult = await createFile({
+      PATH: path,
+      CONTENT: endingWithNewline(content),
+      overwrite: true,
+    });
   } else {
     try {
-      await fs.appendFile(parsedPath, content);
+      await fs.appendFile(parsedPath, endingWithNewline(content));
     } catch (error) {
       throw new Error(`Failed to update a file at ${path}: ${error.message || JSON.stringify(error)}`);
     }
@@ -75,7 +82,7 @@ async function searchInFile({
 
   return (
     returnContent
-      ? { matches: [...fileContent.matchAll(parsedRegex)] }
+      ? { matches: [...fileContent.match(parsedRegex)] }
       : { found: parsedRegex.test(fileContent) }
   );
 }
@@ -83,7 +90,7 @@ async function searchInFile({
 async function replaceText({
   PATH: path,
   REGEX: replaceByRegex,
-  REPLACE: replaceValue,
+  REPLACE: replaceValue = "", // undefined = delete the matches and replace with nothing
   return: returnContent,
 }) {
   const parsedRegex = tryCreateRegexFromString(replaceByRegex);
@@ -92,7 +99,7 @@ async function replaceText({
   const newContent = fileContent.replace(parsedRegex, replaceValue);
   await createFile({
     PATH: path,
-    CONTENT: newContent,
+    CONTENT: endingWithNewline(newContent),
     overwrite: true,
   });
 

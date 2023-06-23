@@ -1,42 +1,76 @@
-# kaholo-plugin-textEditor
-Text editor plugin for Kaholo. Creates file, adds content, search/replace, and reads file for output in Final Results. For other file operations such as `chmod` or `rm`, please use the Command Line plugin instead.
+# Kaholo Text Editor Plugin
+This plugin extends Kaholo's capabilities to create, read, append, search and replace text in text files.
+
+## Newlines
+Text files of all types typically end with a newline character. The plugin will therefore attempt to help you do this, for example if you append text that does NOT end with a newline, one will be added for you. In some very unusual cases, for example if you wanted a file to NOT end with a newline character, this could be problematic. There are several work-arounds, including method Replace Text in File with a RegExp to identify the unwanted newlines and replace them with nothing, or using sed or truncate with the Command Line plugin to remove only the final newline of a file like so:
+
+    file=mytestfile.txt
+    size=$(stat -c '%s' "$file")
+    truncate -s $(($size-1)) $file
+
+## RegExp
+Methods to Search and Replace/Remove text in the file rely on [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) of the type commonly found in Perl, JavaScript, and other programming languages. For those unfamiliar with these it is recommended that one build and test regular expressions on a purpose-built website such as [Regex101](https://regex101.com/).
+
+In some cases a RegExp may be entered in plain format, for example to match the word "Kaholo" in the text you may simply use that word as the RegExp. Global and multiline options are assumed. However if you want a case insensitive (Option "i") and non-global (find first match only) search then you must use the flagged expression:
+
+    /kaholo/i
+
+The plugin applies the RegExp using JavaScript [String.prototype.match(RegExp)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match).
 
 ## Method: Create New File
 Create a new file with specified content in the specified path.
 
-### Parameters
-1. File Path (String) **Required** - The path to save the new file. Including the path of the new file itself.
-2. File Content (Text) **Required** - The content to add to the new file.
+### Parameter: File Path
+The path and file name for the text file to be written on the Kaholo agent. Either absolute or relative paths may be used.
+
+### Parameter: File Content
+The text to be written to the file.
+
+### Parameter: Overwrite Existing
+In the case where the file already exists and this option is enabled, the file will be overwritten with the provided content.
+
+### Parameter: Return File Content
+If enabled, after the file is written the content of the file is also returned to the Final Result in Kaholo. This is especially useful if the content is JSON and might be accessed by downstream actions using the code layer. For example after writing the JSON result from an automated test package to a file, this code might be used to post the "Success" status to a Slack channel:
+
+    `Test status: ${kaholo.actions.TextEditor1.result.status}`
 
 ## Method: Append To File
-Append the specified content to the end of the specified file.
+Append the specified content to the end of the specified file. This method can also create new files.
 
-### Parameters
-1. File Path (String) **Required** - The path of the file to append the new content to.
-2. Content (Text) **Required** - The content to append to the file.
-3. Don't Create (Boolean) **Optional** - If true and file exists, fail method. If false and file doesn't exist, create a new file with the content.
-4. Return New Content (Boolean) **Optional** - If true, return the new content of the file in case of success. If false return a message about status of the action.
+### Parameter: File Path
+The path and file name for the text file to be appended on the Kaholo agent. Either absolute or relative paths may be used.
+
+### Parameter: Content
+This is the text Content to be appended. If it does not end with a final newline character, one will be added for you. See the above [section on newlines](##Newlines) if this causes issues in your use case.
+
+### Parameter: Don't Create
+By default if the file does not yet exist it will be created for you. If this parameter is enabled it will error instead.
+
+### Parameter: Return New Content
+If enabled, the entire contents of the file will be returned in the Kaholo execution's Final Result.
 
 ## Method: Search In File
-Search the content of the specified file for the specified regex pattern.
-If specified also return all matches.
+Search the content of the specified file for the specified RegExp pattern. The return value can be either simply `"found": true` or an array of matching strings from the file.
 
-### Parameters
-1. File Path (String) **Required** - The path of the file to search it's contents.
-2. Regexp (String) **Required** - The regex pattern to search in the file.
-3. Return Matches (Boolean) **Optional** - If true, also return all matches of the specified regex pattern. If false only return whether the pattern was found.
+### Parameter: File Path
+The path and file name for the text file to be searched on the Kaholo agent. Either absolute or relative paths may be used.
+
+### Parameter: RegExp
+The regular expression to use for the search. See section [RegExp](##RegExp) above for further detail.
+
+### Parameter: Return Matches
+If enabled, matching strings are returned in the Kaholo execution's Final Result. Otherwise a simple boolean is returned to indicate if the expression was matched or not.
 
 ## Method: Replace Text In File
-Replace text in file using the following javascript [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace).
+This method is identical to method Search In File except it also replaces the strings that match the expression.
 
-### Parameters
-1. File Path (String) **Required** - The path of the file to do the replace action on.
-2. Search Regex Expression (String) **Required** - The regex pattern to catch and replace with the replace value.
-3. Replace Value (String) **Required** - The value to replace any matched substring. The replace value can contain special replacement patterns, described [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#specifying_a_string_as_a_parameter).
-4. Return New Content (Boolean) **Optional** - If true, return the new content of the file in case of success. If false return a message about status of the action.
+### Parameter: Replace Value
+The text with which to replace matches in the text file. If left empty, the matches will be replaced by nothing, effectively just deleted from the file.
 
-## Method: Get File Content
-Return the content of the file in the specified path. Fail if file does not exist.
+## Method: Read File Content
+Reads and returns the content of the specified file in the Final Result of the Kaholo action's execution. This is particularly useful for reading JSON files to expose them as objects in the Kaholo code layer. For example the package.json from this plugin could be read, and then the eslint version might be referred to in code as:
 
-### Parameters
-1. File Path (String) **Required** - The path of the file to return it's contents.
+    kaholo.actions.TestEditor1.result.devDependencies.eslint
+
+### Parameter: File Path
+The path and file name for the text file to be read from the Kaholo agent. Either absolute or relative paths may be used.
