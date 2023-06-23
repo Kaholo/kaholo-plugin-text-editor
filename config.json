@@ -17,7 +17,7 @@
     "search",
     "replace",
     "line",
-    "regex",
+    "regexp",
     "write",
     "append"
    ],
@@ -31,8 +31,8 @@
           "viewName": "File Path",
           "type": "string",
           "required": true,
-          "description": "The complete path and filename for the new file",
-          "placeholder": "/home/logadmin/scripts/export.sh"
+          "description": "Path and filename for the new file",
+          "placeholder": "scripts/export.sh"
         },
         {
           "name": "CONTENT",
@@ -45,7 +45,7 @@
         {
           "name": "overwrite",
           "viewName": "Overwrite Existing",
-          "description": "If selected, any existing file at the File Path will be overwritten.",
+          "description": "If enabled, any existing file at the File Path will be overwritten.",
           "type": "boolean",
           "default": true
         },
@@ -67,8 +67,8 @@
           "viewName": "File Path",
           "type": "string",
           "required": true,
-          "description": "The complete path and filename for the new file",
-          "placeholder": "/home/logadmin/scripts/export.sh"
+          "description": "Path and filename for the new file",
+          "placeholder": "secrets/gcp_creds.json"
         },
         {
           "name": "CONTENT",
@@ -95,8 +95,8 @@
           "viewName": "File Path",
           "type": "string",
           "required": true,
-          "description": "The complete path and filename for file to be appended",
-          "placeholder": "/home/logadmin/scripts/export.sh"
+          "description": "Path and filename for file to be appended",
+          "placeholder": "logs/build_results.log"
         },
         {
           "name": "CONTENT",
@@ -104,7 +104,7 @@
           "type": "text",
           "required": true,
           "description": "The text to append to the file",
-          "placeholder": "chmod 400 /home/logadmin/key001.pem"
+          "placeholder": "project kaholo-enterprise built successfully"
         },
         {
           "name": "dontCreate",
@@ -116,6 +116,7 @@
           "name": "return",
           "viewName": "Return New Content",
           "type": "boolean",
+          "default": "false",
           "description": "If selected, after appending the entire contents of the file are returned to Final Result."
         }
       ]
@@ -129,8 +130,8 @@
           "viewName": "File Path",
           "type": "string",
           "required": true,
-          "description": "The complete path and filename for file to search",
-          "placeholder": "/home/logadmin/scripts/export.sh"
+          "description": "Path and filename for file to search",
+          "placeholder": "project/log/build.log"
         },
         {
           "name": "REGEX",
@@ -144,7 +145,7 @@
           "viewName": "Return Matches",
           "type": "boolean",
           "default": false,
-          "description": "If selected, all matching strings are returned. Otherwise only whether or not a match was found."
+          "description": "If selected, all matches are returned. Otherwise only found: true/false"
         }
       ]
     },
@@ -157,15 +158,15 @@
           "viewName": "File Path",
           "type": "string",
           "required": true,
-          "description": "The complete path and filename for the file to have replacements made",
-          "placeholder": "/home/logadmin/scripts/export.sh"
+          "description": "Path and filename for the file to have replacements made",
+          "placeholder": "scripts/export.sh"
         },
         {
           "name": "REGEX",
-          "viewName": "Search Regex Expression",
+          "viewName": "Search RegExp Expression",
           "type": "string",
           "required": true,
-          "description": "Regular expressions are patterns used to match character combinations in strings.",
+          "description": "Regular expression used to match strings in the file",
           "placeholder": "[eE][rR][rR][oO][rR]"
         },
         {
@@ -173,7 +174,7 @@
           "viewName": "Replace Value",
           "type": "text",
           "required": false,
-          "description": "The string to replace those matching the Search Regex Expression",
+          "description": "The string to replace those matching the Search RegExp Expression",
           "placeholder": "(Leave undefined to simply delete matches)"
         },
         {
@@ -194,8 +195,8 @@
           "viewName": "File Path",
           "type": "string",
           "required": true,
-          "description": "The complete path and filename for the file to read",
-          "placeholder": "/home/logadmin/scripts/export.sh"
+          "description": "Path and filename for the file to read",
+          "placeholder": "scripts/export.sh"
         }
       ]
     }
