@@ -54,7 +54,7 @@
           "viewName": "Return File Content",
           "type": "boolean",
           "default": false,
-          "description": "If selected, after writing the file, the contents are also returned to Final Result."
+          "description": "If enabled, after writing the file, the contents are also returned to Final Result."
         }
       ]
     },
@@ -80,7 +80,7 @@
         {
           "name": "overwrite",
           "viewName": "Overwrite Existing",
-          "description": "If selected, any existing file at the File Path will be overwritten.",
+          "description": "If enabled, any existing file at the File Path will be overwritten.",
           "type": "boolean",
           "default": true
         }
@@ -110,14 +110,14 @@
           "name": "dontCreate",
           "viewName": "Don't Create",
           "type": "boolean",
-          "description": "If selected, append only if file at File Path already exists"
+          "description": "If enabled, append only if file at File Path already exists"
         },
         {
           "name": "return",
           "viewName": "Return New Content",
           "type": "boolean",
           "default": "false",
-          "description": "If selected, after appending the entire contents of the file are returned to Final Result."
+          "description": "If enabled, after appending the entire contents of the file are returned to Final Result."
         }
       ]
     },
@@ -145,7 +145,7 @@
           "viewName": "Return Matches",
           "type": "boolean",
           "default": false,
-          "description": "If selected, all matches are returned. Otherwise only found: true/false"
+          "description": "If enabled, all matches are returned. Otherwise only found: true/false"
         }
       ]
     },
@@ -182,7 +182,7 @@
           "viewName": "Return New Content",
           "type": "boolean",
           "default": false,
-          "description": "If selected, after replacing the entire contents of the file are returned to Final Result."
+          "description": "If enabled, after replacing the entire contents of the file are returned to Final Result."
         }
       ]
     },
