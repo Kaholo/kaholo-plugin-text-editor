@@ -80,11 +80,12 @@ async function searchInFile({
 
   const fileContent = await getFileContent({ PATH: parsedPath });
 
-  return (
-    returnContent
-      ? { matches: [...fileContent.match(parsedRegex)] }
-      : { found: parsedRegex.test(fileContent) }
-  );
+  const result = { found: parsedRegex.test(fileContent) };
+  if (returnContent) {
+    result.matches = [...(fileContent.match(parsedRegex) ?? [])];
+  }
+
+  return result;
 }
 
 async function replaceText({
